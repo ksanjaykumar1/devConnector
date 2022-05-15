@@ -15,4 +15,6 @@ To add middleware, routes
 app.use(express.json({extended:false}))
 
 
+### return res.status(200).json({msg:})
+add return if you want that to be the final response 
 
