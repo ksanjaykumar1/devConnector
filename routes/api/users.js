@@ -3,7 +3,7 @@ const router = express.Router();
 const {check, validationResult} = require('express-validator');
 const gravatar = require('gravatar');
 const bcrypt = require("bcryptjs")
-
+const jwt = require("jsonwebtoken")
 const User = require('../../models/User')
 
 // @route       POST api/users
@@ -35,7 +35,7 @@ router.post('/',[
     if(user){
 
         // sending array of errors 
-        res.status(400).json({errors:[{ msg: "User already exists"}]});
+        return res.status(400).json({errors:[{ msg: "User already exists"}]});
     }
 
     // Get users gravatar
@@ -64,15 +64,17 @@ router.post('/',[
 
     // Return jsonwebtoken
 
+    res.send("User registered")
+
     }catch(error){
 
-        console.error(err.message)
-        res.status(500),send('Serer error')
+        console.error(error.message)
+        return res.status(400).send('Serer error')
     }
     
 
 
-    res.send('User adac route')
+    return res.send('User adac route')
 })
 
 
