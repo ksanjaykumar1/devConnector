@@ -5,6 +5,7 @@ const gravatar = require('gravatar');
 const bcrypt = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const User = require('../../models/User')
+const config = require('config')
 
 // @route       POST api/users
 // @desc        Register user
@@ -62,10 +63,25 @@ router.post('/',[
 
     await user.save();
 
+    // creating payload for jwt
+
+    const payload = {
+        user: {
+            id: user.id
+        }
+    }
+
+    jwt.sign(payload,
+        config.get('jwtSecret'),
+        {
+            expiresIn:36000
+        },(err,token)=>{
+            if(err) throw err;
+            return res.json({token})
+        })
+
     // Return jsonwebtoken
-
-    res.send("User registered")
-
+    
     }catch(error){
 
         console.error(error.message)
@@ -73,8 +89,6 @@ router.post('/',[
     }
     
 
-
-    return res.send('User adac route')
 })
 
 
