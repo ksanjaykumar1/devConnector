@@ -3,9 +3,12 @@ const connectDB = require("./config/db")
 
 const app = express();
 
-//connectDB
-
+//Connect to Database
 connectDB();
+
+// Init Middleware
+// to parse the incoming requests with JSON payloads
+app.use(express.json({extended:false}))
 
 // Define Routes
 app.use('/api/users',require('./routes/api/users'))
